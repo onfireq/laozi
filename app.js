@@ -141,6 +141,12 @@ function renderHome() {
       <p>5 篇导读 · 从零读懂老子</p>
       <span class="go">进入 →</span>
     </a>
+    <a class="quick-card glass" href="#/marx" onclick="return nav('marx')">
+      <span class="quick-emoji">🔄</span>
+      <h4>老子 × 马克思主义</h4>
+      <p>六大会通 · 四处分殊 · 跨思想对话</p>
+      <span class="go">进入 →</span>
+    </a>
   </div>
 
   <h2 class="section-title">选读名章</h2>
@@ -304,6 +310,13 @@ function renderLearn() {
   const html = `
   <h2 class="section-title">入门研习</h2>
   <p class="section-sub">从零读懂老子 —— 五篇导读，建立全书的思想骨架</p>
+  <a class="marx-banner glass" href="#/marx" onclick="return nav('marx')">
+    <span class="marx-banner-ico">🔄</span>
+    <span class="marx-banner-txt">
+      <strong>专题 · 老子 × 马克思主义哲学</strong>
+      <em>六大会通 · 四处分殊 · 跨思想对话 →</em>
+    </span>
+  </a>
   <div class="article-list">
     ${LAOZI_ARTICLES.map(a => `
       <a class="article-item glass" href="#/article/${a.id}" onclick="return nav('article/${a.id}')">
@@ -332,6 +345,65 @@ function renderArticle(id) {
   return html;
 }
 
+function renderMarx() {
+  const m = LAOZI_MARX;
+  const q = (x) =>
+    `<blockquote class="marx-quote ${x.cls}">${esc(x.text)}<cite>—— ${esc(x.src)}</cite></blockquote>`;
+  const sec = (s) => `
+    <section class="marx-sec glass">
+      <h3 class="marx-sec-title">${esc(s.title)}</h3>
+      <div class="marx-cols">
+        <div class="marx-col">
+          <div class="marx-col-head lz">《道德经》原文</div>
+          ${s.laozi.map((x) => q({ text: x.text, src: x.src, cls: "lz" })).join("")}
+        </div>
+        <div class="marx-col">
+          <div class="marx-col-head mx">马克思主义</div>
+          ${s.marx.map((x) => q({ text: x.text, src: x.src, cls: "mx" })).join("")}
+        </div>
+      </div>
+      <div class="marx-bif">
+        <div class="marx-tong"><span class="tag tag-tong">会通</span><p>${esc(s.tong)}</p></div>
+        <div class="marx-shu"><span class="tag tag-shu">分殊</span><p>${esc(s.shu)}</p></div>
+      </div>
+    </section>`;
+  return `
+    <div class="marx-page">
+      <header class="marx-hero glass">
+        <div class="marx-kicker">专题研习 · 跨思想对话</div>
+        <h2>${esc(m.title)}</h2>
+        <p class="marx-sub">${esc(m.subtitle)}</p>
+      </header>
+      <div class="marx-intro glass">
+        ${m.intro.map((p) => `<p>${esc(p)}</p>`).join("")}
+      </div>
+      ${m.sections.map(sec).join("")}
+      <section class="marx-diff-sec glass">
+        <h3>${esc(m.diff.title)}</h3>
+        <div class="marx-diff-wrap">
+          <table class="marx-diff">
+            <thead><tr>${m.diff.head.map((h) => `<th>${esc(h)}</th>`).join("")}</tr></thead>
+            <tbody>
+              ${m.diff.rows.map((r) => `<tr>${r.map((c, i) => i === 0 ? `<td class="dim">${esc(c)}</td>` : `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="marx-meaning glass">
+        <h3>当代意义</h3>
+        ${m.meaning.map((p) => `<p>${esc(p)}</p>`).join("")}
+      </section>
+      <section class="marx-concl glass">
+        <div class="marx-concl-mark">道</div>
+        <p>${esc(m.conclusion)}</p>
+      </section>
+      <div class="marx-nav">
+        <a class="btn" href="#/learn" onclick="return nav('learn')">← 返回入门研习</a>
+        <a class="btn btn-primary" href="#/chapters" onclick="return nav('chapters')">开始通读八十一章 →</a>
+      </div>
+    </div>`;
+}
+
 /* ---------- 路由 ---------- */
 function route() {
   const h = (location.hash || "#/home").replace(/^#\//, "");
@@ -357,6 +429,8 @@ function route() {
       html = renderLearn(); active = "learn"; break;
     case "article":
       html = renderArticle(param); active = "learn"; break;
+    case "marx":
+      html = renderMarx(); active = "learn"; break;
     default:
       html = renderHome(); active = "home";
   }

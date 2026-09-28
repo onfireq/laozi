@@ -311,3 +311,100 @@ mark { background: rgba(217, 179, 106, 0.35); color: var(--text); padding: 0 2px
   .quote-grid { columns: 1; }
   .concept-grid { grid-template-columns: 1fr; }
 }
+
+/* ---------- 专题：老子 × 马克思主义 ---------- */
+.marx-page { animation: fadeUp 0.5s ease; }
+.marx-hero { padding: 34px 30px; text-align: center; margin-bottom: 18px; }
+.marx-kicker {
+  display: inline-block; font-size: 12px; letter-spacing: 3px; color: var(--cinnabar-soft);
+  border: 1px solid rgba(193, 75, 58, 0.35); border-radius: 999px; padding: 3px 14px; margin-bottom: 12px;
+}
+.marx-hero h2 { font-size: 30px; font-family: var(--font-serif); letter-spacing: 2px; }
+.marx-sub { color: var(--text-soft); margin-top: 8px; font-size: 14px; }
+.marx-intro { padding: 24px 30px; margin-bottom: 18px; }
+.marx-intro p { margin-bottom: 12px; text-align: justify; }
+.marx-intro p:last-child { margin-bottom: 0; }
+.marx-sec { padding: 26px 30px; margin-bottom: 18px; }
+.marx-sec-title {
+  font-family: var(--font-serif); font-size: 20px; color: var(--gold);
+  padding-bottom: 12px; margin-bottom: 18px; border-bottom: 1px solid var(--border);
+  letter-spacing: 1px;
+}
+.marx-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px; }
+.marx-col { background: rgba(255, 255, 255, 0.03); border-radius: 10px; padding: 16px 18px; }
+.marx-col-head { font-size: 13px; letter-spacing: 2px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.marx-col-head::before { content: ""; width: 6px; height: 6px; border-radius: 50%; }
+.marx-col-head.lz { color: var(--gold-soft); }
+.marx-col-head.lz::before { background: var(--gold); }
+.marx-col-head.mx { color: var(--cinnabar-soft); }
+.marx-col-head.mx::before { background: var(--cinnabar); }
+.marx-quote {
+  margin: 0 0 10px; padding: 10px 14px; border-left: 3px solid var(--gold);
+  background: rgba(217, 179, 106, 0.06); border-radius: 0 8px 8px 0;
+  font-family: var(--font-serif); color: var(--text); font-size: 15px;
+}
+.marx-quote.mx { border-left-color: var(--cinnabar); background: rgba(193, 75, 58, 0.06); }
+.marx-quote cite { display: block; font-style: normal; font-size: 12px; color: var(--text-faint); margin-top: 4px; }
+.marx-bif { display: grid; gap: 10px; }
+.marx-tong, .marx-shu {
+  display: flex; gap: 12px; padding: 14px 16px; border-radius: 10px; align-items: flex-start;
+}
+.marx-tong { background: rgba(127, 181, 163, 0.08); border: 1px solid rgba(127, 181, 163, 0.22); }
+.marx-shu { background: rgba(193, 75, 58, 0.07); border: 1px solid rgba(193, 75, 58, 0.2); }
+.tag {
+  flex: none; font-size: 12px; letter-spacing: 2px; padding: 2px 10px; border-radius: 999px;
+  font-family: var(--font-serif);
+}
+.tag-tong { background: rgba(127, 181, 163, 0.18); color: var(--jade); border: 1px solid rgba(127, 181, 163, 0.4); }
+.tag-shu { background: rgba(193, 75, 58, 0.16); color: var(--cinnabar-soft); border: 1px solid rgba(193, 75, 58, 0.35); }
+.marx-tong p, .marx-shu p { margin: 0; font-size: 14px; text-align: justify; }
+.marx-diff-sec { padding: 26px 30px; margin-bottom: 18px; }
+.marx-diff-sec h3 { font-family: var(--font-serif); font-size: 20px; color: var(--gold); margin-bottom: 16px; letter-spacing: 1px; }
+.marx-diff-wrap { overflow-x: auto; }
+.marx-diff { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 640px; }
+.marx-diff th {
+  text-align: left; padding: 10px 14px; color: var(--gold-soft);
+  border-bottom: 2px solid rgba(217, 179, 106, 0.35); font-weight: 600; letter-spacing: 1px;
+}
+.marx-diff td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.7; }
+.marx-diff tr:hover td { background: rgba(255, 255, 255, 0.03); }
+.marx-diff td.dim { color: var(--gold); font-weight: 600; white-space: nowrap; width: 88px; }
+.marx-meaning { padding: 26px 30px; margin-bottom: 18px; }
+.marx-meaning h3 { font-family: var(--font-serif); font-size: 20px; color: var(--gold); margin-bottom: 14px; letter-spacing: 1px; }
+.marx-meaning p { margin-bottom: 12px; text-align: justify; }
+.marx-meaning p:last-child { margin-bottom: 0; }
+.marx-concl {
+  position: relative; padding: 40px 34px; margin-bottom: 22px; text-align: center;
+  background: linear-gradient(160deg, rgba(217, 179, 106, 0.08), rgba(193, 75, 58, 0.05));
+  border: 1px solid rgba(217, 179, 106, 0.2); border-radius: var(--radius); overflow: hidden;
+}
+.marx-concl-mark {
+  font-size: 150px; line-height: 1; font-family: var(--font-serif); font-weight: 700;
+  color: rgba(217, 179, 106, 0.1); position: absolute; right: 8%; top: -20px; user-select: none; pointer-events: none;
+}
+.marx-concl p { font-family: var(--font-serif); font-size: 16px; line-height: 2.2; position: relative; }
+.marx-nav { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 30px; }
+.marx-nav .btn {
+  display: inline-block; padding: 10px 22px; border-radius: 999px; border: 1px solid var(--border);
+  color: var(--text-soft); background: var(--card); transition: all 0.25s;
+}
+.marx-nav .btn:hover { border-color: var(--gold); color: var(--gold); }
+.marx-nav .btn-primary {
+  background: linear-gradient(135deg, var(--gold), var(--cinnabar)); color: #141218; font-weight: 600; border: none;
+}
+.marx-nav .btn-primary:hover { opacity: 0.9; color: #141218; }
+.marx-banner {
+  display: flex; align-items: center; gap: 14px; padding: 18px 22px; margin: 16px 0 20px;
+  border: 1px solid rgba(217, 179, 106, 0.25); border-radius: var(--radius); transition: all 0.25s;
+}
+.marx-banner:hover { border-color: var(--gold); transform: translateY(-2px); }
+.marx-banner-ico { font-size: 26px; }
+.marx-banner-txt { display: flex; flex-direction: column; gap: 2px; }
+.marx-banner-txt strong { color: var(--text); font-size: 16px; }
+.marx-banner-txt em { font-style: normal; color: var(--text-faint); font-size: 13px; }
+@media (max-width: 720px) {
+  .marx-cols { grid-template-columns: 1fr; }
+  .marx-hero h2 { font-size: 22px; }
+  .marx-sec, .marx-intro, .marx-diff-sec, .marx-meaning { padding: 20px 16px; }
+  .marx-concl { padding: 30px 20px; }
+}
