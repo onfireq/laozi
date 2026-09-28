@@ -507,11 +507,31 @@ function renderVideoDetail(no) {
     </div>
     <a class="btn btn-ghost" href="https://www.bilibili.com/video/${v.bvid}" target="_blank" rel="noopener">在 B 站打开 ↗</a>
   </div>
+  ${tr ? renderVideoStudy(v, tr) : ""}
   ${tr ? renderTranscript(`${label} · 讲解文稿`, tr.paras, tr.chars)
        : `<div class="glass vd-missing">该期视频暂无可用文稿（B 站 AI 字幕转写异常）。仍可点击上方视频直接观看讲解。</div>`}
   <div class="vd-nav">
     ${prev ? `<a class="nav-btn" href="#/videos/${prev.no}" onclick="return nav('videos/${prev.no}')">← ${esc(prevLabel)}</a>` : "<span></span>"}
     ${next ? `<a class="nav-btn next" href="#/videos/${next.no}" onclick="return nav('videos/${next.no}')">${esc(nextLabel)} →</a>` : ""}
+  </div>`;
+}
+
+function renderVideoStudy(v, tr) {
+  const ch = v.chapter;
+  if (!ch) return "";
+  const chapter = LAOZI_CHAPTERS.find((c) => c.id === ch);
+  if (!chapter) return "";
+  const points = (tr.points || []).slice(0, 4);
+  const concepts = LAOZI_CONCEPTS.filter((c) => Array.isArray(c.links) && c.links.includes(ch)).slice(0, 2);
+  const quotes = LAOZI_QUOTES.filter((q) => q.ch === ch).slice(0, 3);
+  return `
+  <div class="glass vd-study">
+    <div class="vs-head"><h3>本章研习 · 第${ch}章</h3><a class="btn btn-mini" href="#/chapter/${ch}" onclick="return nav('chapter/${ch}')">读完整章节 →</a></div>
+    <div class="vs-org">${esc(chapter.text)}</div>
+    <div class="vs-trans">${esc(chapter.trans)}</div>
+    ${chapter.insight ? `<p class="vs-insight">📖 导读：${esc(chapter.insight)}</p>` : ""}
+    ${points.length ? `<div class="vs-points"><h4>讲解要点</h4>${points.map((p) => `<p>· ${esc(p)}</p>`).join("")}</div>` : ""}
+    ${concepts.length ? `<div class="vs-links">${concepts.map((c) => `<a class="chip" href="#/concept/${c.id}" onclick="return nav('concept/${c.id}')">概念 · ${esc(c.name)}</a>`).join("")}${quotes.map((q) => `<a class="chip" href="#/chapter/${ch}" onclick="return nav('chapter/${ch}')">名句 · ${esc(q.text.slice(0, 14))}…</a>`).join("")}</div>` : ""}
   </div>`;
 }
 

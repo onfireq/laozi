@@ -525,6 +525,20 @@ mark { background: rgba(217, 179, 106, 0.35); color: var(--text); padding: 0 2px
 }
 .vd-meta h3 { margin: 0 0 .3rem; font-size: 1.05rem; letter-spacing: .02em; color: var(--text); }
 .vd-meta p { margin: 0; color: var(--text-faint); font-size: .85rem; }
+/* 研习面板（原文+今译+导读+要点+联动） */
+.vd-study { margin-top: 1.2rem; padding: 1.5rem 1.7rem; }
+.vs-head { display: flex; align-items: center; justify-content: space-between; gap: .8rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.vs-head h3 { margin: 0; font-size: 1.05rem; letter-spacing: .05em; color: var(--gold); }
+.vs-org { font-size: 1.06rem; line-height: 2.05; letter-spacing: .04em; color: var(--ink); padding: .9rem 1.1rem; background: var(--card-bg); border-left: 3px solid var(--cinnabar); border-radius: 6px; }
+.vs-trans { margin-top: .8rem; font-size: .95rem; line-height: 1.95; color: var(--ink-soft); text-align: justify; }
+.vs-insight { margin-top: 1rem; font-size: .93rem; line-height: 1.9; color: var(--ink-soft); background: var(--bg); border-radius: 6px; padding: .8rem 1rem; }
+.vs-points { margin-top: 1.1rem; }
+.vs-points h4 { margin: 0 0 .5rem; font-size: .95rem; color: var(--cinnabar); letter-spacing: .04em; }
+.vs-points p { margin: 0 0 .45em; font-size: .92rem; line-height: 1.8; color: var(--ink); }
+.vs-links { margin-top: 1.1rem; display: flex; flex-wrap: wrap; gap: .5rem; }
+.vs-links .chip { display: inline-block; padding: .32em .8em; font-size: .83rem; color: var(--ink); background: var(--card-bg); border: 1px solid var(--border); border-radius: 999px; text-decoration: none; transition: all .2s; }
+.vs-links .chip:hover { color: var(--paper); background: var(--cinnabar); border-color: var(--cinnabar); }
+
 .vd-transcript { margin-top: 1rem; padding: 1.5rem 1.7rem 1.3rem; }
 .vt-head {
   display: flex; align-items: baseline; justify-content: space-between;
