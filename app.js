@@ -530,6 +530,7 @@ function renderVideoStudy(v, tr) {
     <div class="vs-org">${esc(chapter.text)}</div>
     <div class="vs-trans">${esc(chapter.trans)}</div>
     ${chapter.insight ? `<p class="vs-insight">📖 导读：${esc(chapter.insight)}</p>` : ""}
+    ${DDJ_INSIGHTS && DDJ_INSIGHTS[ch] ? `<p class="vs-wuyu">🪷 一章一悟：${esc(DDJ_INSIGHTS[ch])}</p>` : ""}
     ${points.length ? `<div class="vs-points"><h4>讲解要点</h4>${points.map((p) => `<p>· ${esc(p)}</p>`).join("")}</div>` : ""}
     ${concepts.length ? `<div class="vs-links">${concepts.map((c) => `<a class="chip" href="#/concept/${c.id}" onclick="return nav('concept/${c.id}')">概念 · ${esc(c.name)}</a>`).join("")}${quotes.map((q) => `<a class="chip" href="#/chapter/${ch}" onclick="return nav('chapter/${ch}')">名句 · ${esc(q.text.slice(0, 14))}…</a>`).join("")}</div>` : ""}
   </div>`;
