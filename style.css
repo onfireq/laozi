@@ -13,6 +13,7 @@
   --cinnabar: #c14b3a;
   --cinnabar-soft: #e0755f;
   --jade: #7fb5a3;
+  --scroll-thumb: rgba(217, 179, 106, 0.28);
   --ink: #ece7dd;
   --shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
   --radius: 14px;
@@ -33,6 +34,7 @@
   --cinnabar: #a63c2c;
   --cinnabar-soft: #c05a46;
   --jade: #2f6b58;
+  --scroll-thumb: rgba(163, 117, 31, 0.32);
   --shadow: 0 10px 40px rgba(90, 70, 30, 0.12);
 }
 
@@ -50,6 +52,11 @@ body {
     radial-gradient(900px 400px at 10% 110%, rgba(193, 75, 58, 0.05), transparent 60%);
 }
 ::selection { background: rgba(217, 179, 106, 0.3); }
+/* 滚动条（与观易站对齐：窄条+透明轨+金色圆角） */
+::-webkit-scrollbar { width: 7px; height: 7px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 
 a { color: var(--gold); text-decoration: none; }
 a:hover { color: var(--gold-soft); }

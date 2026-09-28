@@ -451,9 +451,10 @@ function ddjCard(v) {
   const date = v.pub ? new Date(v.pub * 1000).toLocaleDateString("zh-CN") : "";
   const label = v.chapter ? `第${v.chapter}章` : "系列收官";
   const tr = v.hasText ? DDJ_TRANSCRIPTS[v.no] : null;
+  const url = `https://www.bilibili.com/video/${v.bvid}`;
   return `
   <div class="glass video-card" id="ddj-card-${v.no}">
-    <a class="vc-link" href="#/videos/${v.no}" onclick="return nav('videos/${v.no}')" aria-label="进入${label}研习页">
+    <a class="vc-link" href="${url}" target="_blank" rel="noopener" aria-label="在 B 站观看${label}视频">
       <div class="vc-media">
         <div class="vc-yao"><span class="ddj-seal">道</span></div>
         <img src="${v.pic}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'" />
@@ -468,10 +469,7 @@ function ddjCard(v) {
         </div>
       </div>
     </a>
-    <div class="vc-foot">
-      ${tr ? `<span class="vc-wen">📄 ${tr.chars} 字文稿</span><a class="btn btn-mini" href="#/videos/${v.no}" onclick="return nav('videos/${v.no}')">阅读文稿 →</a>`
-           : `<span class="vc-wen dim">文稿暂缺</span>`}
-    </div>
+    ${tr ? `<div class="vc-foot"><span class="vc-wen">📄 ${tr.chars} 字文稿已收录</span></div>` : ""}
   </div>`;
 }
 
@@ -594,7 +592,7 @@ function route() {
     case "marx":
       html = renderMarx(); active = "learn"; break;
     case "videos":
-      html = param ? renderVideoDetail(parseInt(param, 10)) : renderVideos(); active = "videos"; break;
+      html = renderVideos(); active = "videos"; break;
     default:
       html = renderHome(); active = "home";
   }
