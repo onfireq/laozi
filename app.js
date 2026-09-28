@@ -141,6 +141,12 @@ function renderHome() {
       <p>5 篇导读 · 从零读懂老子</p>
       <span class="go">进入 →</span>
     </a>
+    <a class="quick-card glass" href="#/videos" onclick="return nav('videos')">
+      <span class="quick-emoji">📺</span>
+      <h4>视频研习</h4>
+      <p>B站合集 · 逐章视频 + 讲解文稿</p>
+      <span class="go">进入 →</span>
+    </a>
     <a class="quick-card glass" href="#/marx" onclick="return nav('marx')">
       <span class="quick-emoji">🔄</span>
       <h4>老子 × 马克思主义</h4>
@@ -404,6 +410,141 @@ function renderMarx() {
     </div>`;
 }
 
+/* ============================================================
+   视频研习：白话道德经 B 站合集（8789124）+ AI 字幕文稿
+   ============================================================ */
+const DDJ_SEASON_NAME = "合集 · 白话道德经";
+const DDJ_SEASON_URL = "https://space.bilibili.com/42484832/lists/8789124?type=season";
+
+function ddjOrdered() {
+  return [...DDJ_VIDEOS].sort((a, b) => a.no - b.no);
+}
+
+function renderVideos() {
+  const ordered = ddjOrdered();
+  const withText = ordered.filter((v) => v.hasText).length;
+  const chBar = Array.from({ length: 81 }, (_, i) => i + 1)
+    .map((n) => `<button class="ddj-ch" data-ch="${n}">${n}</button>`).join("");
+  return `
+  <h2 class="section-title">视频研习</h2>
+  <p class="section-sub">同一位 UP 主的 B 站系列《${esc(DDJ_SEASON_NAME)}》，逐章用大白话讲透《道德经》八十一章。视频与文稿对照研习。</p>
+
+  <div class="glass video-meta">
+    <div class="vm-info">
+      <h3>${esc(DDJ_SEASON_NAME)}</h3>
+      <p>已收录 ${ordered.length} 期 · 覆盖第 1–81 章（${withText} 期含讲解文稿）。</p>
+    </div>
+    <a class="btn btn-ghost" href="${DDJ_SEASON_URL}" target="_blank" rel="noopener">在 B 站打开合集 ↗</a>
+  </div>
+
+  <div class="ddj-chapters" id="ddj-chapters" aria-label="章节快速跳转">
+    <span class="ddj-bar-label">章</span>
+    ${chBar}
+  </div>
+
+  <div class="video-grid">
+    ${ordered.map((v) => ddjCard(v)).join("")}
+  </div>`;
+}
+
+function ddjCard(v) {
+  const date = v.pub ? new Date(v.pub * 1000).toLocaleDateString("zh-CN") : "";
+  const label = v.chapter ? `第${v.chapter}章` : "系列收官";
+  const tr = v.hasText ? DDJ_TRANSCRIPTS[v.no] : null;
+  return `
+  <div class="glass video-card" id="ddj-card-${v.no}">
+    <a class="vc-link" href="#/videos/${v.no}" onclick="return nav('videos/${v.no}')" aria-label="进入${label}研习页">
+      <div class="vc-media">
+        <div class="vc-yao"><span class="ddj-seal">道</span></div>
+        <img src="${v.pic}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.display='none'" />
+        <span class="vc-no">${label}</span>
+        <span class="vc-dur">${v.dur}</span>
+      </div>
+      <div class="vc-body">
+        <h4 class="vc-title">${esc(v.title)}</h4>
+        <div class="vc-meta">
+          <span class="vm-play">▶ ${v.view}</span>
+          ${date ? `<span>${date}</span>` : ""}
+        </div>
+      </div>
+    </a>
+    <div class="vc-foot">
+      ${tr ? `<span class="vc-wen">📄 ${tr.chars} 字文稿</span><a class="btn btn-mini" href="#/videos/${v.no}" onclick="return nav('videos/${v.no}')">阅读文稿 →</a>`
+           : `<span class="vc-wen dim">文稿暂缺</span>`}
+    </div>
+  </div>`;
+}
+
+function renderVideoDetail(no) {
+  const v = DDJ_VIDEOS.find((x) => x.no === Number(no));
+  if (!v) return renderVideos();
+  const ordered = ddjOrdered();
+  const idx = ordered.findIndex((x) => x.no === v.no);
+  const prev = idx > 0 ? ordered[idx - 1] : null;
+  const next = idx < ordered.length - 1 ? ordered[idx + 1] : null;
+  const tr = v.hasText ? DDJ_TRANSCRIPTS[v.no] : null;
+  const label = v.chapter ? `第${v.chapter}章` : "系列收官";
+  const date = v.pub ? new Date(v.pub * 1000).toLocaleDateString("zh-CN") : "";
+  const prevLabel = prev ? (prev.chapter ? `第${prev.chapter}章` : "系列收官") : "";
+  const nextLabel = next ? (next.chapter ? `第${next.chapter}章` : "系列收官") : "";
+  const chLink = v.chapter
+    ? `<a class="nav-btn" href="#/chapter/${v.chapter}" onclick="return nav('chapter/${v.chapter}')">读原文 · 第${v.chapter}章 →</a>`
+    : "";
+  return `
+  <div class="vd-topbar">
+    <a class="nav-btn" href="#/videos" onclick="return nav('videos')">← 返回视频列表</a>
+    ${chLink}
+  </div>
+  <h2 class="section-title">${esc(label)} · 视频研习</h2>
+  <p class="section-sub">${esc(v.title)}</p>
+  <div class="glass vd-player">
+    <iframe src="https://player.bilibili.com/player.html?bvid=${v.bvid}&page=1&high_quality=1&danmaku=0&autoplay=0" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" title="${label}讲解视频"></iframe>
+  </div>
+  <div class="glass vd-meta">
+    <div class="vm-info">
+      <h3>${esc(v.title)}</h3>
+      <p>时长 ${v.dur} · 播放 ${v.view}${date ? " · " + date : ""}</p>
+    </div>
+    <a class="btn btn-ghost" href="https://www.bilibili.com/video/${v.bvid}" target="_blank" rel="noopener">在 B 站打开 ↗</a>
+  </div>
+  ${tr ? renderTranscript(`${label} · 讲解文稿`, tr.paras, tr.chars)
+       : `<div class="glass vd-missing">该期视频暂无可用文稿（B 站 AI 字幕转写异常）。仍可点击上方视频直接观看讲解。</div>`}
+  <div class="vd-nav">
+    ${prev ? `<a class="nav-btn" href="#/videos/${prev.no}" onclick="return nav('videos/${prev.no}')">← ${esc(prevLabel)}</a>` : "<span></span>"}
+    ${next ? `<a class="nav-btn next" href="#/videos/${next.no}" onclick="return nav('videos/${next.no}')">${esc(nextLabel)} →</a>` : ""}
+  </div>`;
+}
+
+function renderTranscript(label, paras, chars) {
+  return `
+  <div class="glass vd-transcript">
+    <div class="vt-head">
+      <h3>📄 ${esc(label)}</h3>
+      <span class="vt-chars">约 ${chars} 字 · AI 字幕转写</span>
+    </div>
+    <div class="vt-body">
+      ${paras.map((p) => `<p>${esc(p)}</p>`).join("")}
+    </div>
+    <p class="vt-note">文稿由 B 站 AI 字幕自动转写整理，或有错字，供研习参考。</p>
+  </div>`;
+}
+
+function bindDdj() {
+  const bar = document.getElementById("ddj-chapters");
+  if (!bar) return;
+  bar.addEventListener("click", (e) => {
+    const btn = e.target.closest(".ddj-ch");
+    if (!btn) return;
+    const ch = Number(btn.dataset.ch);
+    let el = document.getElementById("ddj-card-" + ch);
+    if (!el) {
+      const v = DDJ_VIDEOS.find((x) => x.chapter === ch);
+      if (v) el = document.getElementById("ddj-card-" + v.no);
+    }
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+}
+
 /* ---------- 路由 ---------- */
 function route() {
   const h = (location.hash || "#/home").replace(/^#\//, "");
@@ -431,11 +572,14 @@ function route() {
       html = renderArticle(param); active = "learn"; break;
     case "marx":
       html = renderMarx(); active = "learn"; break;
+    case "videos":
+      html = param ? renderVideoDetail(parseInt(param, 10)) : renderVideos(); active = "videos"; break;
     default:
       html = renderHome(); active = "home";
   }
   app.innerHTML = html;
   setActive(active);
+  if (seg === "videos") bindDdj();
 }
 
 window.addEventListener("hashchange", route);
